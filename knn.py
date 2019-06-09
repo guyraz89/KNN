@@ -3,12 +3,11 @@ from sklearn import datasets
 import operator
 import csv
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
 
 
 def loadData():
     iris = datasets.load_iris()
-    X = np.array(iris.data[:, 3 : 4])
+    X = np.array(iris.data[:, 2 : 4])
     y = np.array(iris.target)
     return X, y
 
@@ -110,10 +109,22 @@ def KNN(X, k):
         neighbors = getNeighbors(X, X[x], k)
         result = getDecision(neighbors)
         predictions.append(result)
-        print('predicted=' + repr(result) + ', actual=' + repr(X[x][-1]))
+        print(('X[{x}] -> predicted=' + repr(result) + ', actual=' + repr(X[x][-1])).format(x=x))
     accuracy = getAccuracy(X, predictions)
     print('Accuracy: ' + repr(accuracy) + '%')
     return accuracy, predictions
+
+
+def plot(X):
+    setosa = X[np.where(X[:, -1] == 0)]
+    virginica = X[np.where(X[:, -1] == 1)]
+    versicolor = X[np.where(X[:, -1] == 2)]
+    plt.scatter(setosa[:, 0], setosa[:, 1], marker="o", color="r")
+    plt.scatter(versicolor[:, 0], versicolor[:, 1], marker="o", color="g")
+    plt.scatter(virginica[:, 0], virginica[:, 1], marker="o", color="b")
+    plt.show()
+
+
 
 
 if __name__ == '__main__':
@@ -121,3 +132,4 @@ if __name__ == '__main__':
     X, y = loadData()
     X = np.concatenate((X, y[:,None]), axis=1)
     acc, pred = KNN(X, k)
+    plot(X)
