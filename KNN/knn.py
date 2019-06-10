@@ -16,8 +16,8 @@ def loadData():
     --euclideanDistance--
 
     Input: 
-        inst1 - vector of size 
-        inst2 - vector of size
+        inst1 - vector of size length
+        inst2 - vector of size length
         length - the length of the two vectors.
 
     Output: 
